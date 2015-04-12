@@ -1,0 +1,2 @@
+/usr/bin/bmpanel2 arch&
+exec dbus-launch openbox

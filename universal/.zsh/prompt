@@ -1,0 +1,20 @@
+if [ `whoami` = "root" ]
+then
+  PROMPT="[%T]%B%{$fg[red]%}[%n@%M]%b%{$fg[green]%}[%~]%#%{$reset_color%} "
+fi
+
+if [ `whoami` = "matthew" ]
+then
+  PROMPT="[%T]%B%{$fg[green]%}[%n@%m]%b%{$fg[green]%}[%~]%#%{$reset_color%} "
+fi
+
+if [[ "$(whoami)" =~ ^(burchettm)$ ]]
+then
+    PROMPT="[%T]%B%{$fg[cyan]%}[%n@%m]%b%{$fg[cyan]%}[%~]%#%{$reset_color%} "
+fi
+
+if [[ "$(whoami)" =~ ^(minecraft|michaela)$ ]]
+then
+    PROMPT="[%T]%B%{$fg[magenta]%}[%n@%m]%b%{$fg[magenta]%}[%~]%#%{$reset_color%} "
+fi
+

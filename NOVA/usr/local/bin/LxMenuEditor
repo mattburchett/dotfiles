@@ -1,0 +1,488 @@
+#!/bin/sh
+# Author : dave@meyer.LA
+# Date   : 01/01/2011
+#
+# LxMenuEditor
+# Finally, a complete, straightforward, bulletproof menu editor for LXDE
+#
+# Dependencies: lxshortcut, zenity
+
+#Trap to ensure we stay clean
+clean_up(){
+unset IFS
+unset LANG2
+cd "$HOME/.local/share/applications"
+rm -f tmpfile*
+}
+
+trap 'clean_up' EXIT INT TERM QUIT SIGINT SIGQUIT SIGTERM
+
+#Preliminaries:
+clean_up
+LANG2=`echo $LANG | tr '.' '\t' | awk '{ print $1 }'`
+export LANG2
+
+#Functions:
+SanityCheck(){
+echo 10
+#Bar none, the most reliable method to overcome the problems associated with multiple files with spaces is to rename.
+cd "$HOME/.local/share/applications"
+IFS=$'\n'
+for FILE in `ls *.desktop | grep " "` ; do mv "$FILE" `echo $FILE | tr ' ' '_'` ; done
+unset IFS
+echo 20
+#Ensure there are Name= and Name[lang]= tags
+cd "$HOME/.local/share/applications"
+for FILE in `ls *.desktop`
+do NAM=`cat "$FILE" | grep -x ^Name=.* | sed -e 's/.*=//g'`
+NAML=`cat "$FILE" | grep -x ^Name.$LANG2.=.* | sed -e 's/.*=//g'`
+	if [ "$NAM" ] || [ "$NAML" ]; then
+		if [ "$NAM" ] && [ -z "$NAML" ]; then
+#Copy Name= to Name[lang]=
+		echo "Name[$LANG2]=${NAM}" >> "$FILE"
+		fi
+		if [ "$NAML" ] && [ -z "$NAM" ]; then
+#Copy Name[lang]= to Name= 
+		echo "Name=${NAML}" >> "$FILE"
+		fi
+	fi
+	if [ -z "$NAML" ] && [ -z "$NAM" ]; then	#REM The return status of AND and OR lists is the exit status of the last command executed in the list : *    with command1 && command2, command2 is executed only if command1 returns an exit status of zero (true)    *    with command1 â”‚â”‚ command2, command2 is executed only if command1 returns a non-zero exit status (false)
+		echo "Name=<empty>" >> "$FILE"
+		echo "Name[$LANG2]=<empty>" >> "$FILE"
+	fi
+done
+echo 30
+for FILE in `ls *.desktop`
+do COM=`cat "$FILE" | grep -x ^Comment=.* | sed -e 's/.*=//g'`
+COML=`cat "$FILE" | grep -x ^Comment.$LANG2.=.* | sed -e 's/.*=//g'`
+	if [ "$COM" ] || [ "$COML" ]; then
+		if [ "$COM" ] && [ -z "$COML" ]; then
+#Copy Name= to Name[lang]=
+		echo "Comment[$LANG2]=${COM}" >> "$FILE"
+		fi
+		if [ "$COML" ] && [ -z "$COM" ]; then
+#Copy Name[lang]= to Name= 
+		echo "Comment=${COML}" >> "$FILE"
+		fi
+	fi
+	if [ -z "$COML" ] && [ -z "$COM" ]; then
+		echo "Comment=<empty>" >> "$FILE"
+		echo "Comment[$LANG2]=<empty>" >> "$FILE"
+	fi
+done
+echo 40
+for ME in `grep -L ^Exec= *.desktop` ; do echo "Exec=<empty>" >> "$ME" ; done
+for MCat in `grep -L ^Categories= *.desktop` ; do echo "Categories=<empty>" >> "$MCat" ; done
+# All tagged not to show in LXDE get the NoDisplay=true for reliable filtering later
+for OSI in `grep -H -E -l -x -e 'OnlyShowIn.*' *.desktop | xargs -L50 grep -L -e 'OnlyShowIn=.*LXDE *'`
+do sed -e '/NoDisplay=.*/d' -e '/^$/ d' -i "$OSI"
+echo "NoDisplay=true" >> "$OSI"
+done
+echo 50
+
+#Dups
+cd "$HOME/.local/share/applications"
+#Remove duplicates
+for FILE in *.desktop
+do occ=`grep -c ^Name= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Name=.* "$FILE"`
+		sed -e '/^Name=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 60
+for FILE in *.desktop
+do occ=`grep -c ^Exec= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Exec=.* "$FILE"`
+		sed -e '/^Exec=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 70
+for FILE in *.desktop
+do occ=`grep -c ^Comment= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Comment=.* "$FILE"`
+		sed -e '/^Comment=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 80
+for FILE in *.desktop
+do occ=`grep -c ^Categories= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Categories=.* "$FILE"`
+		sed -e '/^Categories=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 90
+for FILE in *.desktop
+do occ=`grep -c ^Name.$LANG2.= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Name.$LANG2.=.* "$FILE"`
+		sed -e '/Name\['"$LANG2"'\]=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 95
+for FILE in *.desktop
+do occ=`grep -c ^Comment.$LANG2.= "$FILE"`
+#Non-integer trap.
+echo "$occ" | grep "[^0-9]" > /dev/null 2>&1
+echo $occ >tmpfile11 #found this to be req when debugging, go figure.
+if [ "$?" -eq 1 ]; then
+	return
+else
+	if [ "$occ" -gt 1 ]; then
+		linetokeep=`grep -m 1 ^Comment.$LANG2.=.* "$FILE"`
+		sed -e '/Comment\['"$LANG2"'\]=.*/d' -e '/^$/ d' -i "$FILE"
+		echo "$linetokeep" >> "$FILE"
+	fi
+fi
+done
+echo 101
+}
+
+SanityCheck | zenity --progress --auto-close --auto-kill --width=500 --title="Applying sanity checks and auto-corrections" --text="This essential step ensures LXDE operates error-free. \n\nIt speeds up .desktop file processing and menu access. \n\nPlease, it's worth the wait..."
+EXIT=$?
+	if [ $EXIT -ne 0 ] ; then
+		exit 0
+	fi
+
+TurnOn(){
+cd "$HOME/.local/share/applications"
+#To show comment out:
+#"NotShowIn" lines that include "LXDE" with a single "#"
+#"OnlyShowIn" lines that do not include "LXDE" with a single "#"
+#"Hidden=true" with a single "#"
+#rm NoDisplay=true
+for FILE in `echo "$ToTurnOn"` ; do sed '
+							s/NotShowIn.*LXDE/#&/g
+							/^##/s/#//1
+							/LXDE/!s/OnlyShowIn/#&/g
+							/^##/s/#//1
+							s/Hidden=true/#&/g
+							/^##/s/#//1
+							/NoDisplay=.*/d 
+							/^$/ d' -i "$HOME/.local/share/applications"/"$FILE" ; done
+#This may generate a minor error like "Output line too long" . Barnette @ http://www.grymoire.com/Unix/Sed.html#uh-41 considers this a bug, and has reported it to Sun.
+}
+
+TurnOff(){
+cd "$HOME/.local/share/applications"
+#To hide: 
+#rm "NoDisplay=" and prevent duplicates
+#add "NoDisplay=true"
+for FILE in `echo "$ToTurnOff"` ; do sed -e '/NoDisplay=.*/d' -e '/^$/ d' -i "$HOME/.local/share/applications"/"$FILE" ; done
+for FILE in `echo "$ToTurnOff"` ; do echo "NoDisplay=true" >> "$HOME/.local/share/applications"/"$FILE" ; done
+}
+
+MainMenuLoop(){
+while :
+do
+
+#Choices choices choices...
+chose=`zenity --list --height="260" --width="250" --title="LXDE Menu Editor" --text="What do you want to do? \n\nClick <b>CANCEL</b> to <b>EXIT</b>." --column="" "Create a launcher" "Edit a launcher" "Show or Hide launcher(s)" "Delete existing launcher(s)" "Override system-wide launchers"`
+#Clicking CANCEL or empty OK exits the script
+	EXIT=$?
+	if [ $EXIT -ne 0 ] ; then
+		exit 0
+	fi
+if [ -z "$chose" ]; then
+		exit 0
+fi
+
+if [ "$chose" = "Create a launcher" ]; then
+DefineName(){
+	itemname=`zenity --entry --text="Enter a name (example: lxterminal) \n\nNote that capital letters are filed before lower case letters. \n\n(This name is only for the *.desktop file.)"`
+#Clicking CANCEL loops back, OK asks again
+		EXIT=$?
+		if [ $EXIT -ne 0 ] ; then
+			MainMenuLoop
+		else
+			FileExists
+		fi
+}
+
+FileExists(){
+	cd "$HOME/.local/share/applications"
+	if [ -e "$itemname".desktop ]; then
+		zenity --question --title="Warning" --width="200" --text="${itemname}.desktop already exists. \n\n<b>Overwrite?</b>"
+#Clicking CANCEL loops back, OK continues
+		EXIT=$?
+		if [ $EXIT -ne 0 ] ; then
+			DefineName
+		else
+			Create
+		fi
+	else
+		Create
+	fi
+}
+
+Create(){ 			
+		if [ "$itemname" ]; then
+			cd "$HOME/.local/share/applications"
+			lxshortcut -o "$itemname".desktop
+#Sanity check: test if the new launcher is more than an empty file
+			SANCHK=`du -b "$itemname".desktop | awk '{ print $1 }'`
+#If no then rm and notify of cancelation before returning to main menu
+			if [ "$SANCHK" -lt 110 ]; then
+				rm "$HOME/.local/share/applications"/"$itemname".desktop
+				zenity --info --title="Warning" --width="200" --text="${itemname}.desktop was empty and was therefore DISCARDED. \n\n\nPlease try again."
+			else
+				select=`zenity --list --height="330" --width="400" --text="Choose the LXMenu Section(s) to file ${itemname}.desktop under." --checklist --multiple --separator=";" --hide-column=2 --print-column=2 --column="" --column="Returned Output" --column="Category" FALSE Utility Accessories FALSE Graphics Graphics FALSE Network Internet FALSE Office Office TRUE Other Other FALSE AudioVideo "Sound & Video" FALSE System "System Tools" FALSE Accessibility "Universal Access" FALSE Settings "System -> Preferences" FALSE SystemSetup "System -> Administration"`
+#Failure to select at least one checkmark results in the Categories tag being set to Other
+				if `grep -qw "^Categories=;" "$itemname".desktop` ; then
+					sed -e '/^Categories=.*/d' -e '/^$/ d' -i "$itemname".desktop
+					echo "Categories=Other;" >> "$HOME/.local/share/applications"/"$itemname".desktop
+					zenity --info --title="Note" --width="200" --text="${itemname}.desktop filed under <i>Other</i> by default."
+				else
+				echo "Categories=${select};" >> "$HOME/.local/share/applications"/"$itemname".desktop
+				fi
+#Sanity Check: test if the new launcher is more than an empty file
+				SANCHK=`du -b "$itemname".desktop | awk '{ print $1 }'`
+#If no then delete and notify of cancelation before returning to main menu
+					if [ "$SANCHK" -lt 123 ]; then
+					rm "$HOME/.local/share/applications"/"$itemname".desktop
+					zenity --info --title="Warning" --width="200" --text="${itemname}.desktop was empty and was therefore DISCARDED. \n\n\nPlease try again."
+					fi
+			fi
+#Failure to select a file yet clicking OK
+		elif [ !"$itemname" ]; then
+			zenity --question --title="Note" --width="200" --text="Please enter a name."
+			EXIT=$?
+			if [ $EXIT -ne 0 ] ; then
+				MainMenuLoop
+			else
+				DefineName
+			fi
+		fi
+}
+
+DefineName
+#rm spaces in new name.
+cd "$HOME/.local/share/applications"
+IFS=$'\n'
+for FILE in `ls *.desktop | grep " "` ; do mv "$FILE" `echo $FILE | tr ' ' '_'` ; done
+unset IFS
+fi
+# Loop back to the main menu to continue
+
+if [ "$chose" = "Edit a launcher" ]; then
+#Rescan to reflect changes since the last operation
+	scan_OFF=`grep -H -E -l -x -e 'NoDisplay=true' -e 'Hidden=true' -e 'NotShowIn.*LXDE.*' *.desktop`
+	scan_ON=`ls *.desktop | grep -v "$scan_OFF"`
+	scan_ON_displayname=`echo "$scan_ON" | xargs grep -x ^Name.$LANG2.=.* | sed -e 's/.*=//g'`
+	scan_ON_command=`echo "$scan_ON" | xargs grep -x ^Exec=.* | sed -e 's/.*=//g'`
+	scan_ON_comment=`echo "$scan_ON" | xargs grep -x ^Comment.$LANG2.=.* | sed -e 's/.*=//g'`
+	scan_ON_categories=`echo "$scan_ON" | xargs grep -x ^Categories=.* | sed -e 's/.*=//g'`
+#Format to suit zenity's rigidly anal --list input requirements
+	echo "${scan_ON_displayname}" | sed -e 's/^$/<empty>/g' > tmpfile1
+	echo "${scan_ON}" > tmpfile2
+	echo "${scan_ON_command}" | sed 's/^$/<empty>/g' > tmpfile3
+	echo "${scan_ON_comment}" | sed 's/^$/<empty>/g' > tmpfile4
+	echo "${scan_ON_categories}" | sed 's/^$/<empty>/g' > tmpfile5
+	zlist=`pr -m -t -s"|" tmpfile1 tmpfile2 tmpfile3 tmpfile4 tmpfile5 | awk '{print $0}' | sed -e 's/|/\n/g'`
+
+IFS=$'\n'
+selected=`zenity --list --height="700" --width="1300" --title="Launchers currently showing" --text="Select the launcher to <b>EDIT</b>" --print-column=2 --column="Display Name" --column=Filename --column=Command --column="Tooltip Comment" --column=Categories $zlist`
+unset IFS
+#Clicking CANCEL loops back to main menu
+	EXIT=$?
+	if [ $EXIT -ne 0 ] ; then
+		MainMenuLoop
+	fi
+	if [ $selected ]; then
+#Test if Categories exist, if not asign to Other
+	NOCAT=`grep -L ^Categories= $selected`	
+		if [ "$NOCAT" = $selected ]; then
+			echo "Categories=Other;" >> "$HOME/.local/share/applications"/$selected
+		fi
+	lxshortcut -i $selected
+#ensure default tags correspond to language-set tags for Comment= tags
+	TAG1=`grep "^Name.$LANG2.=.*" "$HOME/.local/share/applications"/"$selected" | sed 's/^Name.*=//'`
+	if [ "$TAG1" ]; then
+		#rm Name= line
+		sed -e '/^Name=/d' -e '/^$/ d' -i "$HOME/.local/share/applications"/"$selected"
+		#copy Name[en_US]= tag to Name= tag
+		echo "Name=${TAG1}" >> "$HOME/.local/share/applications"/"$selected"
+	fi
+	TAG2=`grep "^Comment.$LANG2.=.*" "$HOME/.local/share/applications"/"$selected" | sed 's/^Comment.*=//'`
+	if [ "$TAG2" ]; then
+		#rm Comment= line
+		sed -e '/^Comment=/d' -e '/^$/ d' -i "$HOME/.local/share/applications"/"$selected"
+		#copy Comment[en_US]= tag to Comment= tag
+		echo "Comment=${TAG2}" >> "$HOME/.local/share/applications"/"$selected"
+	fi
+		BEFORE=`grep Categories $selected`
+		if `grep Categories $selected | grep -qw Utility` ; then a1=TRUE ; else a1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Graphics` ; then b1=TRUE ; else b1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Network` ; then c1=TRUE ; else c1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Office` ; then d1=TRUE ; else d1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Other` ; then e1=TRUE ; else e1=FALSE ; fi
+		if `grep Categories $selected | grep -qw AudioVideo` ; then f1=TRUE ; else f1=FALSE ; fi
+		if `grep Categories $selected | grep -qw System` ; then g1=TRUE ; else g1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Accessibility` ; then h1=TRUE ; else h1=FALSE ; fi
+		if `grep Categories $selected | grep -qw Settings` ; then i1=TRUE ; else i1=FALSE ; fi
+		if `grep Categories $selected | grep -qw SystemSetup` ; then j1=TRUE ; else j1=FALSE ; fi
+		select=`zenity --list --height="330" --width="400" --text="Choose the LXMenu Section(s) to file $selected under." --checklist --multiple --separator=";" --hide-column=2 --print-column=2 --column="" --column="Returned Output" --column="Category" $a1 Utility Accessories $b1 Graphics Graphics $c1 Network Internet $d1 Office Office $e1 Other Other $f1 AudioVideo "Sound & Video" $g1 System "System Tools" $h1 Accessibility "Universal Access" $i1 Settings "System -> Preferences" $j1 SystemSetup "System -> Administration"`
+			EXIT=$?
+			if [ $EXIT -ne 0 ] ; then
+				AFTER="$BEFORE"
+			else 
+				AFTER=`echo "Categories=${select};"`
+			fi
+			if [ "$BEFORE" != "$AFTER" ]; then
+				sed -e '/^Categories=.*/d' -i $selected
+				echo "Categories=${select};" >> "$HOME/.local/share/applications"/$selected
+			fi
+#Failure to select at least one checkmark results in the Categories tag being set to Other
+		if `grep -qw "^Categories=;" $selected` ; then
+			sed -e '/^Categories=.*/d' -i $selected
+			echo "Categories=Other;" >> "$HOME/.local/share/applications"/$selected
+			zenity --info --title="Note" --width="200" --text="$selected filed under <i>Other</i> by default."
+		fi
+#Failure to select a file yet clicking OK
+	elif [ !"$selected" ]; then
+		zenity --info --title="Note" --width="200" --text="No launcher selected to edit."
+	fi
+fi
+#Loop back to the main menu to continue
+
+if [ "$chose" = "Show or Hide launcher(s)" ]; then
+#Rescan to reflect changes since the last operation
+	scan_OFF=`grep -H -E -l -x -e 'NoDisplay=true' -e 'Hidden=true' -e 'NotShowIn.*LXDE.*' *.desktop`
+	scan_ON=`ls *.desktop | grep -v "$scan_OFF"`
+	scan_ON_displayname=`echo "$scan_ON" | xargs grep -x ^Name.$LANG2.=.* | sed -e 's/.*=//g'`
+	scan_ON_command=`echo "$scan_ON" | xargs grep -x ^Exec=.* | sed -e 's/.*=//g'`
+	scan_ON_comment=`echo "$scan_ON" | xargs grep -x ^Comment.$LANG2.=.* | sed -e 's/.*=//g'`
+#Format to suit zenity's rigidly anal --list input requirements
+	echo "${scan_ON_displayname}" | sed -e 's/^$/<empty>/g' -e 's/^/TRUE|/g' > tmpfile1
+	echo "${scan_ON}" > tmpfile2
+	echo "${scan_ON_command}" | sed 's/^$/<empty>/g' > tmpfile3
+	echo "${scan_ON_comment}" | sed 's/^$/<empty>/g' > tmpfile4
+
+	scan_OFF_displayname=`echo "$scan_OFF" | xargs grep -x ^Name.$LANG2.=.* | sed -e 's/.*=//g'`
+	scan_OFF_command=`echo "$scan_OFF" | xargs grep -x ^Exec=.* | sed -e 's/.*=//g'`
+	scan_OFF_comment=`echo "$scan_OFF" | xargs grep -x ^Comment.$LANG2.=.* | sed -e 's/.*=//g'`
+#Format to suit zenity's rigidly anal --list input requirements
+	echo "${scan_OFF_displayname}" | sed -e 's/^$/<empty>/g' -e 's/^/FALSE|/g' > tmpfile5
+	echo "${scan_OFF}" > tmpfile6
+	echo "${scan_OFF_command}" | sed 's/^$/<empty>/g' > tmpfile7
+	echo "${scan_OFF_comment}" | sed 's/^$/<empty>/g' > tmpfile8
+	zlist1=`pr -m -t -s"|" tmpfile1 tmpfile2 tmpfile3 tmpfile4 | awk '{print $0}' | sed -e 's/|/\n/g'`
+	zlist2=`pr -m -t -s"|" tmpfile5 tmpfile6 tmpfile7 tmpfile8 | awk '{print $0}' | sed -e 's/|/\n/g'`
+
+	IFS=$'\n'
+	selected2=`zenity --list --checklist --height="700" --width="1300" --title="All launchers" --text="Select the launcher(s) to <b>SHOW</b>" --print-column=3 --column="Sort" --column="Display Name" --column=Filename --column=Command --column="Tooltip Comment" $zlist1 $zlist2`
+	unset IFS
+#Clicking Cancel or selecting nothing yet clicking OK loops the script back to the main menu
+	EXIT=$?
+	if [ $EXIT -eq 0 -a "$selected2" ] ; then
+		echo "$selected2" | sed 's/|/\n/g' > tmpfile9
+		ToTurnOn=`diff -T tmpfile2 tmpfile9 | grep ">".* | awk '{print $2}'`
+		ToTurnOff=`diff -T tmpfile2 tmpfile9 | grep "<".* | awk '{print $2}'` 
+			if [ "$ToTurnOn" ]; then
+				TurnOn
+			fi
+			if [ "$ToTurnOff" ]; then
+				TurnOff
+			fi
+	else
+		MainMenuLoop	
+	fi
+fi
+#Loop back to the main menu to continue
+
+if [ "$chose" = "Delete existing launcher(s)" ]; then
+	scan_ALL=`ls "$HOME/.local/share/applications" | grep .desktop | grep -v wine-extension | grep -v userapp` #exclude userapp and wine-extension
+  	selected3=`zenity --list --height="600" --width="400" --text="Select launcher(s) to <b>DELETE</b> \n-->Use ctrl+ or shift+click for multiple selection" --multiple --separator=$'\n' --print-column=ALL --column="All launchers" $scan_ALL`
+#Clicking Cancel loops the script back to the main menu
+	EXIT=$?
+	if [ $EXIT -ne 0 ] ; then
+		MainMenuLoop
+	fi
+	if [ "$selected3" ]; then
+		zenity --question --title="Warning" --text="You are about to permanently <b>REMOVE</b>: \n\n$selected3. \n\nDo you want to proceed? \n\nIf you're unsure: hide DON'T remove."
+		CONF=$?
+			if [ $CONF -eq 0 ] ; then
+				cd "$HOME/.local/share/applications"
+				rm $selected3
+				zenity --info --title="Info" --text="$selected3 \n\n...permanently REMOVED"
+			fi
+#Failure to select a file yet clicking OK
+	elif [ !"$selected3" ]; then
+		zenity --info --title="Note" --width="200" --text="Nothing was deleted. \n\nPlease select at least one launcher and press OK."
+	fi
+fi
+#Loop back to the main menu to continue
+
+if [ "$chose" = "Override system-wide launchers" ]; then
+	zenity --question --width=580 --title="Warning" --text="This will import root launchers so they can be configured for this user. \n\nAs a nice side-effect, it will also speed up rendering of the menu in lxpanel. \n\nIt is recommended to <b>DO THIS ONCE</b>. \n\nImporting will NOT overwrite user-configured launchers. \n\nDo you want to proceed?"
+	CONF2=$?
+	if [ $CONF2 -eq 0 ] ; then
+		cd "$HOME/.local/share/applications"
+		zenity --info --width=580 --title="Note" --text='Find the directory that contains the *.desktop files you wish to gain control of. Sub-directories will NOT be imported. \n\nKDE users BEWARE: You must checkmark -Only Show In KDE- using the KDE menu editor (ie: kmenuedit) or your menus will show duplicates. \n\nThis operation is much quicker and easier through the CLI.\nOpen a terminal in the KDE directory containing the .desktop files and usually found in /usr/share/applications. As root issue the following: \n\n(Use Copy-Paste but replace your-kde-directory.)\n\nfor FILE in `grep -L ^OnlyShowIn= *.desktop` ; do echo "OnlyShowIn=KDE;" >> /usr/share/applications/your-kde-directory/"$FILE" ; done'
+		rootDIR=`zenity --file-selection --title="Confirmation request" --directory --filename=/usr/share/applications/`
+echo $rootDIR
+			EXIT=$?
+			if [ $EXIT -ne 0 ] ; then
+				MainMenuLoop
+			fi
+			if [ "$rootDIR" ]; then
+				cd $rootDIR
+				for launcher in `ls *.desktop` ; do cp -n $rootDIR/"$launcher" "$HOME/.local/share/applications/"; done
+#add any default changes to set after ";" and before "done" ie: echo "OnlyShowIn=LXDE;" >> "/$HOME/.local/share/applications/$launcher;
+				cd "$HOME/.local/share/applications" 
+			fi
+	fi
+SanityCheck | zenity --progress --auto-close --auto-kill --width=500 --title="Applying sanity checks and auto-corrections" --text="This essential step ensures LXDE operates error-free. \n\nIt speeds up .desktop file processing and menu access. \n\nPlease, it's worth the wait..."
+EXIT=$?
+	if [ $EXIT -ne 0 ] ; then
+		exit 0
+	fi
+fi
+done
+}
+MainMenuLoop
+clean_up
+exit 0

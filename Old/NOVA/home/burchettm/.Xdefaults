@@ -1,0 +1,81 @@
+!terminal colors ------------------------------------------------------------
+
+! tangoesque scheme
+*background:  #323232
+*foreground:  #FFFFFF
+! Black
+*color0:      #2E3436
+*color8:      #555753
+! Red
+*color1:      #CC0000
+*color9:      #EF2929
+! Green
+*color2:      #4E9A06
+*color10:     #8AE234
+! Yellow
+*color3:      #C4A000
+*color11:     #FCE94F
+! Blue
+*color4:      #3465A4
+*color12:     #729FCF
+! Mangenta
+*color5:      #75507B
+*color13:     #AD7FA8
+! Cyan 
+*color6:      #06989A
+*color14:     #34E2E2
+! White
+*color7:      #D3D7CF
+*color15:     #EEEEEC
+
+
+
+! rxvt-unicode ---------------------------------------------------------------
+
+urxvt*font:     xft:Ohsnap:pixelsize=14
+urxvt*boldFont: xft:Ohsnap:pixelsize=14
+
+urxvt*geometry:           160x50
+urxvt*internalBorder:     0
+urxvt*fading:             0
+urxvt*inheritPixmap:      true
+!urxvt*depth:              24
+urxvt*depth:              32
+urxvt*saveLines:          32767
+urxvt*visualBell:         false
+urxvt*scrollTtyKeypress:  true
+urxvt*scrollWithBuffer:   false
+urxvt*scrollTtyOutput:    false
+urxvt*scrollBar:          false
+!urxvt*scrollstyle:        plain
+!urxvt*scrollBar_right:    true
+urxvt*cursorColor:        #00FF00
+urxvt*loginShell:         true
+urxvt*termName:           rxvt
+urxvt*cutchars:           "()*,<>[]{}|'
+urxvt*print-pipe:         cat > $(echo urxvt.dump.`date +'%Y%M%d%H%m%S'`)
+urxvt*secondaryScroll:    true
+urxvt*mapAlert:           true
+urxvt*utmpInhibit:        true
+urxvt*perl-lib:           /usr/lib/urxvt/perl/
+urxvt*perl-ext-common:    default,matcher
+urxvt*urlLauncher:        /usr/bin/opera
+urxvt*matcher.button:     1
+urxvt*background:         #323232
+urxvt*shading:            100
+
+! xterm ----------------------------------------------------------------------
+
+xterm*geometry:           80x25
+xterm*faceName:           terminus:pixelsize=10
+xterm*dynamicColors:      true
+xterm*utf8:               2
+xterm*eightBitInput:      true
+xterm*saveLines:          32767
+xterm*scrollTtyKeypress:  true
+xterm*scrollTtyOutput:    false
+xterm*scrollBar:          true
+xterm*loginShell:         true
+xterm*jumpScroll:         false
+xterm*multiScroll:        true
+xterm*toolBar:        

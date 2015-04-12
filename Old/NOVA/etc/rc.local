@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# /etc/rc.local: Local multi-user startup script.
+#
+
+echo bfq > /sys/block/sda/queue/scheduler
+echo bfq > /sys/block/sdb/queue/scheduler
+echo bfq > /sys/block/sdc/queue/scheduler
+echo bfq > /sys/block/sdd/queue/scheduler
+

@@ -1,0 +1,2 @@
+env WINEPREFIX='/home/burchettm/.wineprefix/TheSims3' wine '/home/burchettm/.wineprefix/TheSims3/drive_c/Program Files/Electronic Arts/The Sims 3 Town Life Stuff/Game/Bin/TS3SP04.exe'
+xgamma -gamma 1

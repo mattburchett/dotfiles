@@ -1,0 +1,2 @@
+sleep 20
+conky -c /home/burchettm/.conky/conkyrc1

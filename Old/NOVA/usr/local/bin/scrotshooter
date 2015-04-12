@@ -1,0 +1,11 @@
+#!/bin/bash
+
+msg="Image filename:"
+mydir="$HOME/Desktop/Screenshots"
+title="ScreenShooter"
+
+filename=$(zenity --entry --text "$msg" --entry-text FileName)
+
+scrot $mydir/$filename.png
+
+exit 0

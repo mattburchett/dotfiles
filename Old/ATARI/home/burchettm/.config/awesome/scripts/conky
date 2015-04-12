@@ -1,0 +1,29 @@
+#!/bin/zsh
+
+SERVICE=conky
+
+if pidof $SERVICE > /dev/null
+then
+echo "$SERVICE is running."
+#echo "Starting $SERVICE ..."
+#synergys -c /home/burchettm/.quicksynergy/synergy.conf
+#  if pgrep $SERVICE > /dev/null
+#  then
+#  echo "$SERVICE started ..."
+#  else
+#  echo "$SERVICE failed to start ..."
+#  fi
+else
+
+echo "$SERVICE is NOT running."
+echo "Starting $SERVICE ..."
+conky --config /home/burchettm/.conky/conkyrc1 &
+  if pidof $SERVICE > /dev/null
+  then
+  echo "$SERVICE started ..."
+  else
+  echo "$SERVICE failed to start ..."
+  fi
+
+fi
+

@@ -1,0 +1,491 @@
+nova
+    description: Desktop Computer
+    product: System Product Name (To Be Filled By O.E.M.)
+    vendor: System manufacturer
+    version: System Version
+    serial: System Serial Number
+    width: 64 bits
+    capabilities: smbios-2.5 dmi-2.5 vsyscall32
+    configuration: boot=normal chassis=desktop family=To Be Filled By O.E.M. sku=To Be Filled By O.E.M. uuid=406B001F-C600-0007-3168-BCAEC53625C9
+  *-core
+       description: Motherboard
+       product: M4N98TD EVO
+       vendor: ASUSTeK Computer INC.
+       physical id: 0
+       version: Rev 2.00
+       serial: 108177180000280
+       slot: To Be Filled By O.E.M.
+     *-firmware
+          description: BIOS
+          vendor: American Megatrends Inc.
+          physical id: 0
+          version: 1101
+          date: 11/22/2010
+          size: 64KiB
+          capacity: 960KiB
+          capabilities: isa pci pnp apm upgrade shadowing escd cdboot bootselect socketedrom edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int9keyboard int14serial int17printer int10video acpi usb ls120boot zipboot biosbootspecification
+     *-cpu
+          description: CPU
+          product: (To Be Filled By O.E.M.)
+          vendor: Advanced Micro Devices [AMD]
+          physical id: 3
+          bus info: cpu@0
+          version: AMD Phenom(tm) II X6 1090T Processor
+          serial: To Be Filled By O.E.M.
+          slot: AM3
+          size: 3400MHz
+          capacity: 3600MHz
+          width: 64 bits
+          clock: 200MHz
+          capabilities: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp 3dnowext 3dnow constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf pni monitor cx16 popcnt lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt cpb hw_pstate npt lbrv svm_lock nrip_save pausefilter
+          configuration: cores=6 enabledcores=6
+        *-cache:0
+             description: L1 cache
+             physical id: 5
+             slot: L1-Cache
+             size: 768KiB
+             capacity: 768KiB
+             capabilities: pipeline-burst internal varies
+        *-cache:1
+             description: L2 cache
+             physical id: 6
+             slot: L2-Cache
+             size: 3MiB
+             capacity: 3MiB
+             capabilities: pipeline-burst internal varies
+        *-cache:2
+             description: L3 cache
+             physical id: 7
+             slot: L3-Cache
+             size: 6MiB
+             capacity: 6MiB
+             capabilities: pipeline-burst internal varies
+     *-memory:0
+          description: System Memory
+          physical id: 3b
+          slot: System board or motherboard
+          size: 8GiB
+        *-bank:0
+             description: DIMM DDR Synchronous 1333 MHz (0.8 ns)
+             product: ModulePartNumber00
+             vendor: Manufacturer00
+             physical id: 0
+             serial: SerNum00
+             slot: DIMM0
+             size: 4GiB
+             width: 64 bits
+             clock: 1333MHz (0.8ns)
+        *-bank:1
+             description: DIMM [empty]
+             product: ModulePartNumber01
+             vendor: Manufacturer01
+             physical id: 1
+             serial: SerNum01
+             slot: DIMM1
+        *-bank:2
+             description: DIMM DDR Synchronous 1333 MHz (0.8 ns)
+             product: ModulePartNumber02
+             vendor: Manufacturer02
+             physical id: 2
+             serial: SerNum02
+             slot: DIMM2
+             size: 4GiB
+             width: 64 bits
+             clock: 1333MHz (0.8ns)
+        *-bank:3
+             description: DIMM [empty]
+             product: ModulePartNumber03
+             vendor: Manufacturer03
+             physical id: 3
+             serial: SerNum03
+             slot: DIMM3
+     *-memory:1 UNCLAIMED
+          description: RAM memory
+          product: MCP78S [GeForce 8200] Memory Controller
+          vendor: NVIDIA Corporation
+          physical id: 4
+          bus info: pci@0000:00:00.0
+          version: a2
+          width: 32 bits
+          clock: 66MHz (15.2ns)
+          capabilities: ht bus_master cap_list
+          configuration: latency=0
+     *-isa
+          description: ISA bridge
+          product: MCP78S [GeForce 8200] LPC Bridge
+          vendor: NVIDIA Corporation
+          physical id: 1
+          bus info: pci@0000:00:01.0
+          version: a2
+          width: 32 bits
+          clock: 66MHz
+          capabilities: isa bus_master
+          configuration: latency=0
+          resources: ioport:900(size=256)
+     *-serial
+          description: SMBus
+          product: MCP78S [GeForce 8200] SMBus
+          vendor: NVIDIA Corporation
+          physical id: 1.1
+          bus info: pci@0000:00:01.1
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pm cap_list
+          configuration: driver=nForce2_smbus latency=0
+          resources: irq:10 ioport:e00(size=64) ioport:600(size=64) ioport:700(size=64)
+     *-memory:2 UNCLAIMED
+          description: RAM memory
+          product: MCP78S [GeForce 8200] Memory Controller
+          vendor: NVIDIA Corporation
+          physical id: 1.2
+          bus info: pci@0000:00:01.2
+          version: a1
+          width: 32 bits
+          clock: 66MHz (15.2ns)
+          configuration: latency=0
+     *-processor UNCLAIMED
+          description: Co-processor
+          product: MCP78S [GeForce 8200] Co-Processor
+          vendor: NVIDIA Corporation
+          physical id: 1.3
+          bus info: pci@0000:00:01.3
+          version: a2
+          width: 32 bits
+          clock: 66MHz
+          capabilities: bus_master
+          configuration: latency=0 maxlatency=1 mingnt=3
+          resources: memory:f7f80000-f7ffffff
+     *-memory:3 UNCLAIMED
+          description: RAM memory
+          product: MCP78S [GeForce 8200] Memory Controller
+          vendor: NVIDIA Corporation
+          physical id: 1.4
+          bus info: pci@0000:00:01.4
+          version: a1
+          width: 32 bits
+          clock: 66MHz (15.2ns)
+          configuration: latency=0
+     *-usb:0
+          description: USB controller
+          product: MCP78S [GeForce 8200] OHCI USB 1.1 Controller
+          vendor: NVIDIA Corporation
+          physical id: 2
+          bus info: pci@0000:00:02.0
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pm ohci bus_master cap_list
+          configuration: driver=ohci-pci latency=0 maxlatency=1 mingnt=3
+          resources: irq:15 memory:f7f7e000-f7f7efff
+        *-usbhost
+             product: OHCI PCI host controller
+             vendor: Linux 3.11.4-1-ARCH ohci_hcd
+             physical id: 1
+             bus info: usb@3
+             logical name: usb3
+             version: 3.11
+             capabilities: usb-1.10
+             configuration: driver=hub slots=6 speed=12Mbit/s
+     *-usb:1
+          description: USB controller
+          product: MCP78S [GeForce 8200] EHCI USB 2.0 Controller
+          vendor: NVIDIA Corporation
+          physical id: 2.1
+          bus info: pci@0000:00:02.1
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: debug pm ehci bus_master cap_list
+          configuration: driver=ehci-pci latency=0 maxlatency=1 mingnt=3
+          resources: irq:11 memory:f7f7fc00-f7f7fcff
+        *-usbhost
+             product: EHCI Host Controller
+             vendor: Linux 3.11.4-1-ARCH ehci_hcd
+             physical id: 1
+             bus info: usb@1
+             logical name: usb1
+             version: 3.11
+             capabilities: usb-2.00
+             configuration: driver=hub slots=6 speed=480Mbit/s
+           *-usb:0
+                description: Video
+                product: Webcam B500
+                vendor: Logitech, Inc.
+                physical id: 1
+                bus info: usb@1:1
+                version: 0.09
+                serial: B4CDA160
+                capabilities: usb-2.00
+                configuration: driver=snd-usb-audio maxpower=500mA speed=480Mbit/s
+           *-usb:1
+                description: USB hub
+                product: USB2.0 Hub
+                vendor: Genesys Logic, Inc.
+                physical id: 3
+                bus info: usb@1:3
+                version: 32.98
+                capabilities: usb-2.00
+                configuration: driver=hub maxpower=100mA slots=4 speed=480Mbit/s
+              *-usb
+                   description: Audio device
+                   product: Plantronics Wireless Audio
+                   vendor: Plantronics Wireless Audio
+                   physical id: 1
+                   bus info: usb@1:3.1
+                   version: 1.00
+                   capabilities: usb-1.10 audio-control
+                   configuration: driver=usbhid maxpower=100mA speed=12Mbit/s
+     *-usb:2
+          description: USB controller
+          product: MCP78S [GeForce 8200] OHCI USB 1.1 Controller
+          vendor: NVIDIA Corporation
+          physical id: 5
+          bus info: pci@0000:00:04.0
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pm ohci bus_master cap_list
+          configuration: driver=ohci-pci latency=0 maxlatency=1 mingnt=3
+          resources: irq:10 memory:f7f7d000-f7f7dfff
+        *-usbhost
+             product: OHCI PCI host controller
+             vendor: Linux 3.11.4-1-ARCH ohci_hcd
+             physical id: 1
+             bus info: usb@4
+             logical name: usb4
+             version: 3.11
+             capabilities: usb-1.10
+             configuration: driver=hub slots=6 speed=12Mbit/s
+           *-usb:0
+                description: Generic USB device
+                product: Xbox 360 Wireless Receiver for Windows
+                physical id: 1
+                bus info: usb@4:1
+                version: 1.00
+                serial: FEFD7240
+                capabilities: usb-2.00
+                configuration: driver=xpad maxpower=260mA speed=12Mbit/s
+           *-usb:1
+                description: Mouse
+                product: Cyborg R.A.T.9 Wireless Mouse
+                vendor: Saitek
+                physical id: 3
+                bus info: usb@4:3
+                version: 2.01
+                capabilities: usb-2.00
+                configuration: driver=usbhid maxpower=300mA speed=12Mbit/s
+     *-usb:3
+          description: USB controller
+          product: MCP78S [GeForce 8200] EHCI USB 2.0 Controller
+          vendor: NVIDIA Corporation
+          physical id: 4.1
+          bus info: pci@0000:00:04.1
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: debug pm ehci bus_master cap_list
+          configuration: driver=ehci-pci latency=0 maxlatency=1 mingnt=3
+          resources: irq:10 memory:f7f7f800-f7f7f8ff
+        *-usbhost
+             product: EHCI Host Controller
+             vendor: Linux 3.11.4-1-ARCH ehci_hcd
+             physical id: 1
+             bus info: usb@2
+             logical name: usb2
+             version: 3.11
+             capabilities: usb-2.00
+             configuration: driver=hub slots=6 speed=480Mbit/s
+     *-ide
+          description: IDE interface
+          product: MCP78S [GeForce 8200] IDE
+          vendor: NVIDIA Corporation
+          physical id: 6
+          bus info: pci@0000:00:06.0
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: ide pm bus_master cap_list
+          configuration: driver=pata_amd latency=0 maxlatency=1 mingnt=3
+          resources: irq:0 ioport:1f0(size=8) ioport:3f6 ioport:170(size=8) ioport:376 ioport:ffa0(size=16)
+     *-multimedia
+          description: Audio device
+          product: MCP72XE/MCP72P/MCP78U/MCP78S High Definition Audio
+          vendor: NVIDIA Corporation
+          physical id: 7
+          bus info: pci@0000:00:07.0
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pm bus_master cap_list
+          configuration: driver=snd_hda_intel latency=0 maxlatency=5 mingnt=2
+          resources: irq:11 memory:f7f78000-f7f7bfff
+     *-pci:0
+          description: PCI bridge
+          product: MCP78S [GeForce 8200] PCI Bridge
+          vendor: NVIDIA Corporation
+          physical id: 8
+          bus info: pci@0000:00:08.0
+          version: a1
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pci ht subtractive_decode bus_master cap_list
+     *-storage
+          description: SATA controller
+          product: MCP78S [GeForce 8200] AHCI Controller
+          vendor: NVIDIA Corporation
+          physical id: 9
+          bus info: pci@0000:00:09.0
+          version: a2
+          width: 32 bits
+          clock: 66MHz
+          capabilities: storage pm msi ht ahci_1.0 bus_master cap_list
+          configuration: driver=ahci latency=0 maxlatency=1 mingnt=3
+          resources: irq:40 ioport:d080(size=8) ioport:d000(size=4) ioport:cc00(size=8) ioport:c880(size=4) ioport:c800(size=16) memory:f7f76000-f7f77fff
+     *-network
+          description: Ethernet interface
+          product: MCP77 Ethernet
+          vendor: NVIDIA Corporation
+          physical id: a
+          bus info: pci@0000:00:0a.0
+          logical name: enp0s10
+          version: a2
+          serial: bc:ae:c5:36:25:c9
+          size: 1Gbit/s
+          capacity: 1Gbit/s
+          width: 32 bits
+          clock: 66MHz
+          capabilities: pm msi ht bus_master cap_list ethernet physical mii 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+          configuration: autonegotiation=on broadcast=yes driver=forcedeth driverversion=0.64 duplex=full ip=192.168.1.100 latency=0 link=yes maxlatency=20 mingnt=1 multicast=yes port=MII speed=1Gbit/s
+          resources: irq:41 memory:f7f7c000-f7f7cfff ioport:c480(size=8) memory:f7f7f400-f7f7f4ff memory:f7f7f000-f7f7f00f
+     *-pci:1
+          description: PCI bridge
+          product: MCP78S [GeForce 8200] PCI Express Bridge
+          vendor: NVIDIA Corporation
+          physical id: 10
+          bus info: pci@0000:00:10.0
+          version: a1
+          width: 32 bits
+          clock: 33MHz
+          capabilities: pci pm msi ht pciexpress normal_decode bus_master cap_list
+          configuration: driver=pcieport
+          resources: irq:10 ioport:e000(size=4096) memory:f8000000-fbffffff ioport:d0000000(size=268435456)
+        *-pci
+             description: PCI bridge
+             product: NF200 PCIe 2.0 switch
+             vendor: NVIDIA Corporation
+             physical id: 0
+             bus info: pci@0000:02:00.0
+             version: a2
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pm pciexpress normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:0 ioport:e000(size=4096) memory:f8000000-fbffffff ioport:d0000000(size=268435456)
+           *-pci:0
+                description: PCI bridge
+                product: NF200 PCIe 2.0 switch
+                vendor: NVIDIA Corporation
+                physical id: 0
+                bus info: pci@0000:03:00.0
+                version: a2
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pci pm pciexpress normal_decode bus_master cap_list
+                configuration: driver=pcieport
+                resources: irq:0 ioport:e000(size=4096) memory:f8000000-fbffffff ioport:d0000000(size=268435456)
+              *-display
+                   description: VGA compatible controller
+                   product: G92 [GeForce GTS 250]
+                   vendor: NVIDIA Corporation
+                   physical id: 0
+                   bus info: pci@0000:04:00.0
+                   version: a2
+                   width: 64 bits
+                   clock: 33MHz
+                   capabilities: pm msi pciexpress vga_controller bus_master cap_list rom
+                   configuration: driver=nvidia latency=0
+                   resources: irq:42 memory:fb000000-fbffffff memory:d0000000-dfffffff memory:f8000000-f9ffffff ioport:ec00(size=128) memory:fafe0000-faffffff
+           *-pci:1
+                description: PCI bridge
+                product: NF200 PCIe 2.0 switch
+                vendor: NVIDIA Corporation
+                physical id: 2
+                bus info: pci@0000:03:02.0
+                version: a2
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pci pm pciexpress normal_decode bus_master cap_list
+                configuration: driver=pcieport
+                resources: irq:0
+     *-pci:2
+          description: PCI bridge
+          product: MCP78S [GeForce 8200] PCI Bridge
+          vendor: NVIDIA Corporation
+          physical id: 13
+          bus info: pci@0000:00:13.0
+          version: a1
+          width: 32 bits
+          clock: 33MHz
+          capabilities: pci pm msi ht pciexpress normal_decode bus_master cap_list
+          configuration: driver=pcieport
+          resources: irq:11
+     *-pci:3
+          description: PCI bridge
+          product: MCP78S [GeForce 8200] PCI Bridge
+          vendor: NVIDIA Corporation
+          physical id: 14
+          bus info: pci@0000:00:14.0
+          version: a1
+          width: 32 bits
+          clock: 33MHz
+          capabilities: pci pm msi ht pciexpress normal_decode bus_master cap_list
+          configuration: driver=pcieport
+          resources: irq:15
+     *-pci:4
+          description: Host bridge
+          product: Family 10h Processor HyperTransport Configuration
+          vendor: Advanced Micro Devices, Inc. [AMD]
+          physical id: 100
+          bus info: pci@0000:00:18.0
+          version: 00
+          width: 32 bits
+          clock: 33MHz
+     *-pci:5
+          description: Host bridge
+          product: Family 10h Processor Address Map
+          vendor: Advanced Micro Devices, Inc. [AMD]
+          physical id: 101
+          bus info: pci@0000:00:18.1
+          version: 00
+          width: 32 bits
+          clock: 33MHz
+     *-pci:6
+          description: Host bridge
+          product: Family 10h Processor DRAM Controller
+          vendor: Advanced Micro Devices, Inc. [AMD]
+          physical id: 102
+          bus info: pci@0000:00:18.2
+          version: 00
+          width: 32 bits
+          clock: 33MHz
+     *-pci:7
+          description: Host bridge
+          product: Family 10h Processor Miscellaneous Control
+          vendor: Advanced Micro Devices, Inc. [AMD]
+          physical id: 103
+          bus info: pci@0000:00:18.3
+          version: 00
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=k10temp
+          resources: irq:0
+     *-pci:8
+          description: Host bridge
+          product: Family 10h Processor Link Control
+          vendor: Advanced Micro Devices, Inc. [AMD]
+          physical id: 104
+          bus info: pci@0000:00:18.4
+          version: 00
+          width: 32 bits
+          clock: 33MHz

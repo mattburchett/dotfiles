@@ -1,0 +1,24 @@
+This is my current work laptop. Desktop Environment changes constantly (it's how I test new environments to see how they affect how I work)
+
+MacBook 8,1. 
+
+               `.-/::/-``
+            .-/osssssssso/.               matthew@DUFRESNE
+           :osyysssssssyyys+-             OS: Antergos 
+        `.+yyyysssssssssyyyyy+.           Kernel: x86_64 Linux 3.14.37-1-lts
+       `/syyyyyssssssssssyyyyys-`         Uptime: 2d 4h 1m
+      `/yhyyyyysss++ssosyyyyhhy/`         Packages: 3192
+     .ohhhyyyyso++/+oso+syy+shhhho.       Shell: zsh 5.0.7
+    .shhhhysoo++//+sss+++yyy+shhhhs.      Resolution: 3200x1080
+   -yhhhhs+++++++ossso+++yyys+ohhddy:     DE: MATE 1.8.2
+  -yddhhyo+++++osyyss++++yyyyooyhdddy-    WM: Metacity (Marco)
+ .yddddhso++osyyyyys+++++yyhhsoshddddy`   GTK Theme: 'Numix Frost' [GTK2], 'Numix Frost' [GTK3]
+`odddddhyosyhyyyyyy++++++yhhhyosddddddo   Icon Theme: Numix-Circle
+.dmdddddhhhhhhhyyyo+++++shhhhhohddddmmh.  Font: Sans 10
+ddmmdddddhhhhhhhso++++++yhhhhhhdddddmmdy  CPU: Intel Core i5-2415M CPU @ 2.9GHz
+dmmmdddddddhhhyso++++++shhhhhddddddmmmmh  RAM: 2167MB / 3869MB
+-dmmmdddddddhhyso++++oshhhhdddddddmmmmd- 
+ .smmmmddddddddhhhhhhhhhdddddddddmmmms. 
+   `+ydmmmdddddddddddddddddddmmmmdy/.     
+      `.:+ooyyddddddddddddyyso+:.`
+

@@ -1,0 +1,66 @@
+#Default Editor is VIM
+export EDITOR="vim"
+
+#Set GIT Directory Variable
+export GITDIR="/home/burchettm/.git/computers"
+export GIT="/home/burchettm/.git"
+
+#Set ScreenShots Directory Variable
+export SCREENSHOTS="/home/burchettm/Desktop/Screenshots"
+
+#Enable LIBETC (dotfiles mover)
+#export LD_PRELOAD=libetc.so
+
+#Default Browser is Opera, unless in TTY then it's links
+# Browser
+if [ -n "$DISPLAY" ]; then
+       export  BROWSER=opera
+else
+       export  BROWSER=links
+fi
+
+#Set 256-color terminal
+
+#if [ -n "$DISPLAY" ];
+# then export TERM="xterm-256color"
+# else export TERM="linux"
+#fi
+
+#export language
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+
+# GTK2
+
+export GTK2_RC_FILES="/etc/gtk-2.0/gtkrc:$HOME/.gtkrc-2.0"
+
+if [ -d "$HOME/BTSync/DropSync/Scripts" ]
+then
+  export PATH="$PATH:$HOME/BTSync/DropSync/Scripts"
+fi
+
+if [ `whoami` = "matthew" ]
+then
+if [ "`uname -a | grep Darwin`" ]
+ then
+  PATH="/usr/local/bin:/Users/matthew/.nsak/common/bin:/usr/local/opt/coreutils/libexec/gnubin:/Users/matthew/BTSync/DropSync/Scripts:/Users/matthew/Scripts:$PATH"
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+ else
+ if [ "`uname -a | grep Linux`" ]
+ then 
+ PATH="/usr/local/bin:/home/matthew/.nsak/common/bin:/home/matthew/ownCloud/computer/Scripts:/home/matthew/Scripts:$PATH"
+ fi
+fi
+fi
+
+test -e $HOME/.zsh/.dircolors && \
+ eval `dircolors -b $HOME/.zsh/.dircolors`
+
+
+if [ "`pgrep X`" ]
+then 
+export DISPLAY=:0
+else 
+export DISPLAY=1
+fi

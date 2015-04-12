@@ -1,0 +1,33 @@
+alias ls='ls --color=auto'
+alias cpdir='cp -rv'
+alias vi='vim'
+alias unamedate='echo "Issuing uname -a:" && uname -a && echo "Current Date and Time:" && date'
+alias ..="cd .."
+alias hosts='sudo vim /etc/hosts'
+alias emacs='emacs -nw'
+
+if [ "`which ls++ | grep -v 'not found' `" ]
+then
+  alias ll="`which ls++` -a"
+else
+  alias ll='ls -alh'
+fi
+
+if [ -f '/etc/arch-release' ]
+then
+ alias upgrade='yaourt --aur -Syyu'
+ alias pacman='sudo pacman'
+fi
+
+if [ -f '/etc/debian-release' ]
+then
+ alias upgrade='sudo apt-get update;sudo apt-get upgrade'
+ alias apt-get='sudo apt-get'
+fi
+
+if [ -f '/etc/redhat-release' ]
+then
+ alias upgrade='sudo yum update'
+ alias yum='sudo yum'
+fi
+

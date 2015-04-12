@@ -1,0 +1,26 @@
+NOVA Arch Files:
+
+lshw and hwinfo are related to this machine.
+
+Archey:
+
+               +                
+               #                
+              ###               OS: Arch Linux x86_64
+             #####              Hostname: NOVA
+             ######             Kernel Release: 3.0-ck
+            ; #####;            Processor Type: Intel(R) Celeron(R) D CPU 3.20GHz
+           +##.#####            Uptime: 4:39
+          +##########           WM: AwesomeWM
+         #############;         Packages: 1115
+        ###############+        RAM: 825 MB / 3963 MB
+       #######   #######        $EDITOR: vim
+     .######;     ;###;`".      $SHELL: /bin/zsh
+    .#######;     ;#####.       Root: 17G / 147G (11%) (ext4)
+    #########.   .########`     Home: 118G / 147G (80%) (ext4)
+   ######'           '######    Terabyte: 806G / 932G (86%) (NTFS)
+  ;####                 ####;   
+  ##'                     '##    
+ #'                         `#  
+
+
